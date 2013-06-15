@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if success %}
+        {{success}}
+    {% endif %}
+
+    <form method="POST" action="/contactbf/" >
+        {{ form.as_p }}
+        
+        <input type="submit" value="Send feedback" /> 
+        {% csrf_token %}
+    </form>
+{% endblock %}

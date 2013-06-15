@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if success %}
+        {{success}}
+    {% endif %}
+
+    <form method="POST" action="/contact/" >
+        <input type="text" name="name" id="id_new_item" placeholder="Name" /><br />
+        <textarea name="message"></textarea><br />
+        <input type="submit" value="Send feedback" /> 
+        {% csrf_token %}
+    </form>
+{% endblock %}
