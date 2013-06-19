@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1>Tasks</h1>
 <ul>
     {% for task in tasks %}
-    <li><a href="{% url 'task_page' task.id task.slug %}">{{ task.name }}</a></li>
+    <li><a href="{% url 'task_destail' task.id task.slug %}">#{{ task.id }}</a> {{ task.name }}</li>
     {% endfor %}
 </ul>
 <div class="pagination">
