@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Leave a Suggestion Here</h2>
+{% if message %}
+    {{ message }}
+{% endif %}
+<div>
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit Feedback" />
+    </form>
+</div>
+{% endblock %}

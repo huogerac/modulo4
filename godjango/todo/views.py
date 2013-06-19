@@ -1,5 +1,7 @@
 from django.views.generic import TemplateView, RedirectView
+from django.views.generic.edit import FormView
 
+from .forms import TaskForm
 from .models import Task
 
 class DisplayTaskView(TemplateView):
@@ -17,3 +19,13 @@ class DisplayTaskRedirectView(RedirectView):
         task = Task.objects.get(pk=task_id)
         self.url = '/%s-%s' % (task.id, task.slug)
         return super(DisplayTaskRedirectView, self).get(request, *args, **kwargs)
+
+class SuggestionView(FormView):
+    form_class = TaskForm 
+    success_url = "/"
+    template_name = "suggest.html"
+
+    def form_valid(self, form):
+        print(self.request.POST['name'])
+        print(self.request.POST['description'])
+        return super(SuggestionView, self).form_valid(form)

@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 from django.views.generic import ListView
 
-from views import DisplayTaskView, DisplayTaskRedirectView
+from views import DisplayTaskView, DisplayTaskRedirectView, SuggestionView
 
 from .models import Task
 
@@ -17,6 +17,8 @@ urlpatterns = patterns('todo.views',
                                 queryset = Task.objects.all(),
                                 context_object_name = "tasks",
                                 template_name='task-listview.html')),
+    
+    url(r'^suggest/$', SuggestionView.as_view()),
     
     url(r'^$', TemplateView.as_view(template_name='index.html'), name="home_page"),
     
