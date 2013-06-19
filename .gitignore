@@ -34,3 +34,6 @@ pip-log.txt
 
 # Transifex-style local settings
 ??-*-local.py
+
+admin
+grappelli/
