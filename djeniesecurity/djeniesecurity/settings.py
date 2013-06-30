@@ -127,7 +127,7 @@ INSTALLED_APPS = (
 )
 
 #Define a custom authentication
-AUTHENTICATION_BACKENDS = ( 'cms.custombackend.SMSBackend', )
+AUTHENTICATION_BACKENDS = ( 'cms.custombackend.SMSBackend',)
 
 
 # A sample logging configuration. The only tangible logging

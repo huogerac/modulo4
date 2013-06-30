@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class SMSBackend:
@@ -27,5 +28,12 @@ class SMSBackend:
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
-            return None                
+            return None            
+        
+        
+    def has_perm(self, user_obj, perm):
+        if user_obj.username == 'usera':
+            return True
+        else:
+            return False    
         
