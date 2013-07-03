@@ -4,7 +4,16 @@
 
     <h1> Page 1 </h1>
     <p>
-    	<input type="button" value="bumm" onclick="Dajaxice.djajax.sayhello(my_js_callback);">
+    	<input type="button" value="sayhello" onclick="Dajaxice.djajax.sayhello(my_js_callback);">
     </p>
     
+{% endblock %}
+
+
+{% block javascript %}	            
+	<script type="text/javascript">
+	 function my_js_callback(data){
+	     alert(data.message);
+	 }
+	</script>
 {% endblock %}
