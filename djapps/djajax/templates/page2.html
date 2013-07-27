@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1> Page 2 </h1>
+	<div id="contact_errors"></div>
+	<form action="" method="post" id="contact_form" accept-charset="utf-8">
+		{% csrf_token %}
+	  	<table>{{form}}</table>
+	  	<p><input value="Send Message" id="send_msg" onclick="send_message();" type="button" /></p>
+	</form>
+    
+{% endblock %}
+
+
+{% block javascript %}	            
+	<script type="text/javascript">
+		function message_callback(data){
+		  if (data.status == 'Success!'){
+		    	$('#contact_errors').html(data.status);
+		  } else {
+		    for (message in data.status){
+		      	$('#contact_errors').append("<p><b>" + message + ":</b>" + data.status["message"] + "</p>");
+		    }
+		  }
+		}
+		
+		function send_message(){
+			data = $('#contact_form').serializeObject();
+		  	Dajaxice.djajax.send_message(message_callback, {'form':data});
+		  	return false;
+		}
+	</script>
+{% endblock %}

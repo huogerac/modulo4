@@ -1,10 +1,15 @@
+{% load static %}
 {% load dajaxice_templatetags %}
 
 <!DOCTYPE html>
 <html>
+{{  static }}
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
+        <script type='text/javascript' src="{% static 'jquery.min.js'%}"></script>
+        <script type='text/javascript' src="{% static 'jquery.ba-serializeobject.min.js'%}"></script>
+        	
         {% dajaxice_js_import %}
         
 	    {% block javascript %}

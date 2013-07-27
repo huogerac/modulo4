@@ -4,7 +4,9 @@
 
     <h1> Page 1 </h1>
     <p>
-    	<input type="button" value="sayhello" onclick="Dajaxice.djajax.sayhello(my_js_callback);">
+    	<input type="button" value="run ls script" onclick="run_script_by_ajax();">
+    	
+    	<input type="button" value="call passing param" onclick="call_passing_param_by_ajax();">
     </p>
     
 {% endblock %}
@@ -12,8 +14,21 @@
 
 {% block javascript %}	            
 	<script type="text/javascript">
-	 function my_js_callback(data){
-	     alert(data.message);
-	 }
+		function my_js_callback(data){
+		    alert(data.response);
+		}
+
+		function run_script_by_ajax(){
+			Dajaxice.djajax.run_ls_script(my_js_callback);
+			return false;
+		}
+		
+		
+		
+		function call_passing_param_by_ajax(){
+			Dajaxice.djajax.call_passing_param(my_js_callback, {'data': 'testing'});
+			return false;
+		}
+		 
 	</script>
 {% endblock %}
