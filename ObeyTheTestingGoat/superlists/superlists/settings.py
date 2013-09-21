@@ -1,5 +1,6 @@
 from os import path
 
+PROJECT_ROOT = path.abspath(path.join(path.dirname(__file__), '..'))
 
 
 DEBUG = True
@@ -14,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', '' or 'oracle'.
-        'NAME': 'database.sqlite',                      # Or path to database file if using sqlite3.
+        'NAME': path.join(PROJECT_ROOT, '..', 'database', 'database.sqlite'),
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -64,7 +65,8 @@ MEDIA_URL = ''
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 #STATIC_ROOT = ''
-STATIC_ROOT = path.abspath(path.join(path.dirname(__file__), '../../static'))
+#STATIC_ROOT = path.abspath(path.join(path.dirname(__file__), '../../static'))
+STATIC_ROOT = path.join(PROJECT_ROOT, '../static')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
