@@ -2,6 +2,7 @@ from django.core.urlresolvers import resolve
 from django.test import Client, TestCase
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from django.utils.html import escape
 
 from lists.views import home_page
 from lists.models import Item, List
@@ -58,3 +59,9 @@ class NewListTest(TestCase):
 		#self.assertTemplateUsed(response, 'list.html')
 		#self.assertEqual(response.context['list'], list)			
 
+	def test_validation_errors_sent_back_to_home_page_template(self):
+		response = Client().post('/lists/new', data={'item_text': ''})
+		self.assertEqual(Item.objects.all().count(), 0)
+		self.assertTemplateUsed(response, 'home.html')
+		expected_error =  escape("You can't have an empty list item")
+		self.assertContains(response, expected_error)
