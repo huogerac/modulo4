@@ -34,60 +34,7 @@ class HomePageTest(TestCase):
 
 #		self.assertIn('itemey 1', response.content.decode())
 #		self.assertIn('itemey 2', response.content.decode())
-
-class ListAndItemModelsTest(TestCase):
-
-	def test_saving_and_retrieving_items(self):
-		list = List()
-		list.save()		
 		
-		first_item = Item()
-		first_item.text = 'The first (ever) list item'
-		first_item.list = list
-		first_item.save()
-
-		second_item = Item()
-		second_item.text = 'Item the second'
-		second_item.list = list
-		second_item.save()
-
-		saved_lists = List.objects.all()
-		self.assertEqual(saved_lists.count(), 1)
-		self.assertEqual(saved_lists[0], list)
-		saved_items = Item.objects.all()
-		self.assertEqual(saved_items.count(), 2)
-
-		first_saved_item = saved_items[0]
-		second_saved_item = saved_items[1]
-		self.assertEqual(first_saved_item.text, 'The first (ever) list item')
-		self.assertEqual(first_saved_item.list, list)
-		
-		self.assertEqual(second_saved_item.text, 'Item the second')		
-		self.assertEqual(second_saved_item.list, list)
-		
-class ListViewTest(TestCase):
-
-	def test_list_view_displays_all_items(self):
-		""" this test show how to use client instead of 
-		    make request to the view directly and use decode over the response. 
-		"""
-		list = List.objects.create()
-		Item.objects.create(text='itemey 1', list=list)
-		Item.objects.create(text='itemey 2', list=list)
-		
-		other_list = List.objects.create()
-		Item.objects.create(text='other list item 1', list=other_list)
-		Item.objects.create(text='other list item 2', list=other_list)
-
-		client = Client() #1
-		response = client.get('/lists/%d/' % (list.id,))
-
-		self.assertContains(response, 'itemey 1')
-		self.assertContains(response, 'itemey 2') #4
-		self.assertNotContains(response, 'other list item 1')
-		self.assertNotContains(response, 'other list item 2')
-		self.assertTemplateUsed(response, 'list.html')
-
 
 class NewListTest(TestCase):
 	
