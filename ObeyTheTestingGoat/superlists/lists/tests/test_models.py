@@ -43,3 +43,30 @@ class ListAndItemModelsTest(TestCase):
 		item = Item(list=list1, text='')
 		with self.assertRaises(ValidationError):
 			item.save()
+
+	def test_cannot_save_duplicate_items(self):
+		list1 = List.objects.create()
+		Item.objects.create(list=list1, text='bla')
+		with self.assertRaises(ValidationError):
+			Item.objects.create(list=list1, text='bla')
+			
+	def test_CAN_save_same_item_to_different_lists(self):
+		list1 = List.objects.create()
+		list2 = List.objects.create()
+		Item.objects.create(list=list1, text='bla')
+		Item.objects.create(list=list2, text='bla') # should not raise
+		
+	def test_list_ordering(self):
+		list1 = List.objects.create()
+		item1 = Item.objects.create(list=list1, text='i1')
+		item2 = Item.objects.create(list=list1, text='item 2')
+		item3 = Item.objects.create(list=list1, text='3')
+		self.assertEqual(
+			list(Item.objects.all()),
+			[item1, item2, item3]
+		)
+
+	def test_string_representation(self):
+		list1 = List.objects.create()
+		item1 = Item.objects.create(list=list1, text='some text')
+		self.assertEqual(str(item1), item1.text)
