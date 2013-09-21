@@ -1,25 +1,13 @@
-from django.test import LiveServerTestCase
+from .base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(FunctionalTest):
 
-	def setUp(self):
-		self.browser = webdriver.Firefox()
-		self.browser.implicitly_wait(3)
-		
-	def tearDown(self):
-		self.browser.quit()
-		
-	def check_for_row_in_list_table(self, row_text):
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn(row_text, [row.text for row in rows])		
-		
 	def test_can_start_a_list_and_retrieve_it_later(self):
 		# Edith has heard about a cool new online to-do app. She goes
 		# to check out its homepage
-		self.browser.get(self.live_server_url)
+		self.browser.get(self.server_url)
         
 		# She notices the page title and header mention to-do lists
 		self.assertIn('To-Do', self.browser.title)
@@ -86,17 +74,4 @@ class NewVisitorTest(LiveServerTestCase):
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('Buy peacock feathers', page_text)
 		self.assertIn('Buy milk', page_text)	
-		
-		
-	def test_layout_and_styling(self):
-		# Edith goes to the home page
-		self.browser.get(self.live_server_url)
 
-		# She notices the input box is nicely centered
-		inputbox = self.browser.find_element_by_tag_name('input')
-		window_width = self.browser.get_window_size()['width']
-		self.assertAlmostEqual(
-			inputbox.location['x'] + inputbox.size['width'] / 2,
-			window_width / 2,
-			delta=3
-		)	
