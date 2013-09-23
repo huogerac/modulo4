@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from lists.models import Item
 
 EMPTY_LIST_ERROR = "You can't have an empty list item"
+DUPLICATE_ITEM_ERROR = "You've already got this in your list"
 
 class ItemForm(forms.models.ModelForm):
 
@@ -19,3 +20,14 @@ class ItemForm(forms.models.ModelForm):
                 attrs={'placeholder': 'Enter a to-do item'}
             ),
         }        
+
+class ExistingListItemForm(ItemForm):
+	
+	class Meta(ItemForm.Meta):
+		fields = ('list', 'text')
+
+	def validate_unique(self):
+		super(ItemForm, self).validate_unique()
+		if self.non_field_errors():
+			self._update_errors({'text': [DUPLICATE_ITEM_ERROR]})
+			del self.errors['__all__']

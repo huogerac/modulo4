@@ -6,9 +6,9 @@
     <form method="POST" action="/lists/{{ list.id }}/" >
         <input id="id_text" name="text" placeholder="Enter a to-do item" />
         {% csrf_token %}
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
+        {% if form.errors %}
+			<div class="error">{{ form.text.errors }}</div>
+		{% endif %}
     </form>
 {% endblock %}
 
