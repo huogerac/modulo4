@@ -6,7 +6,7 @@ from django.utils.html import escape
 
 from lists.views import home_page
 from lists.models import Item, List
-from lists.forms import ItemForm
+from lists.forms import ItemForm, EMPTY_LIST_ERROR
 
 class HomePageTest(TestCase):
 	maxDiff = None
@@ -68,8 +68,8 @@ class NewListTest(TestCase):
 		response = Client().post('/lists/new', data={'text': ''})
 		self.assertEqual(Item.objects.all().count(), 0)
 		self.assertTemplateUsed(response, 'home.html')
-		expected_error =  escape("You can't have an empty list item")
-		self.assertContains(response, expected_error)
+		self.assertContains(response, escape(EMPTY_LIST_ERROR))
+		self.assertIsInstance(response.context['form'], ItemForm)
 		
 	def test_validation_errors_end_up_on_lists_page(self):
 		list = List.objects.create()
